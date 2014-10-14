@@ -14,6 +14,5 @@ public:
     Task(const string &inputFileName);
     void PrintTaskInfo();
 };
-extern Task * task_info_p;
 
 #endif

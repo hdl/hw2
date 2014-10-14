@@ -15,5 +15,11 @@
 using namespace std;
 
 
+extern int wetights[GAMESIZE][GAMESIZE];
+
+typedef struct coord_t{
+	int x;
+	int y;
+}coord;
 
 #endif
