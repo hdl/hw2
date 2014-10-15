@@ -18,9 +18,12 @@ int main()
 {
 	Task task_info("input.txt");
 	task_info.PrintTaskInfo();
-	// if (task_info.task_no == 1){
+	vector<char **> new_boards;
+	if (task_info.task_no == 1){
 		Greedy greedy;
-		greedy.get_new_boards_vector(task_info.cells, task_info.your_player);
-	// }
+		new_boards = greedy.get_new_boards_vector(task_info.cells, task_info.your_player);
+		greedy.free_boards(new_boards);
+	}
+	while(1);
 	return (0); 
 }
