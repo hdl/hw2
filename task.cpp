@@ -18,7 +18,7 @@ Task::Task(const string &inputFileName)
 	for(i = 0; i < GAMESIZE; i++){
 	    getline(inputFile, line);
 		for(j = 0; j < GAMESIZE; j++){
-			cells[i][j] = *(line.c_str());
+			cells[i][j] = line.c_str()[j];
 		}
 	}
 	inputFile.close();

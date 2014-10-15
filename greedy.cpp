@@ -31,8 +31,9 @@ void Greedy::get_new_boards(char current_board[][GAMESIZE], char tile, coord &mo
 {
 	int i=0, j=0;
 	int x=0, y=0;
+	int k=0, m=0;
 	char other_tile;
-	char *new_board[GAMESIZE];
+	char **new_board;
 	if (current_board[move.x][move.y] != '*'){
 		return ;
 	}
@@ -44,20 +45,21 @@ void Greedy::get_new_boards(char current_board[][GAMESIZE], char tile, coord &mo
 
 	// all the possible results of this move
 	for(i = 0; i < 8; i++){
+
+		new_board =(char **)malloc(sizeof(char *) * GAMESIZE);
 		for(j=0; j<GAMESIZE; j++)
-		new_board[j] = (char *)malloc(sizeof(char) * GAMESIZE);
-		copy(&current_board[0][0], &current_board[0][0]+ GAMESIZE * GAMESIZE, &new_board[0][0]);
+			new_board[j] = (char *)malloc(sizeof(char) * GAMESIZE);
+		
+		for(k=0; k<8; k++)
+			for(m=0; m<8; m++)
+				new_board[k][m] = current_board[k][m];
 
 		new_board[move.x][move.y] = tile;
-
 		x = move.x + move_dirc[i].x;
 		y = move.y + move_dirc[i].y;
 		// make sure neighbour on this direction is not your tile
 		if (!is_on_board(x, y) || new_board[x][y]!=other_tile){
 			// should free this new_board
-		    // for (j = 0; j < 8 ; j++)
-		    //  	free(new_board[j]);
-		    // free(new_board);
 			continue;		
 		}
 		// go foward from this direction
@@ -65,15 +67,13 @@ void Greedy::get_new_boards(char current_board[][GAMESIZE], char tile, coord &mo
 		// 2. reach other tile
 		// 3. reach *
 		// 4. out of the board 
-		while ( is_on_board(x,y) && new_board[x][y] == other_tile){
+		while (is_on_board(x,y) && new_board[x][y] == other_tile){
 			x += move_dirc[i].x;
 			y += move_dirc[i].y;
 		}
 		if (!is_on_board(x, y) || new_board[x][y] == '*' ){
 			// free the new_board	
-		    // for (j = 0; j < 8 ; j++)
-		    //  	free(new_board[j]);
-		    // free(new_board);
+			free_board_mem(new_board);
 			continue;		
 		}
 		if (new_board[x][y] == tile){
@@ -86,12 +86,27 @@ void Greedy::get_new_boards(char current_board[][GAMESIZE], char tile, coord &mo
 					new_board[x][y]	= tile;
 			}
 			new_boards.push_back((char *)new_board);
-			cout << "one position"<<endl;
+			print_board(new_board);	
 		}
-			cout << "2one position"<<endl;
 	}
 }
+void Greedy::print_board(char **board)
+{
+	int k=0, m=0;
+	cout << "This board score is:"<<endl; 
+	for(k=0; k<8; k++){
+		for(m=0; m<8; m++)
+			cout<<board[k][m];
+		cout<<endl;
+	}
 
+}
+void Greedy::free_board_mem(char **board)
+{
+	for (int j = 0; j < 8 ; j++)
+	 	free(board[j]);
+	free(board);
+}
 vector<char *> Greedy::get_new_boards_vector(char current_board[][GAMESIZE], char tile)
 {
 	int i=0, j=0;
