@@ -12,8 +12,9 @@ class Greedy
 		vector<char **> get_new_boards_vector(char current_board[][GAMESIZE], char tile);
 		void get_new_boards(char current_board[][GAMESIZE], char tile, coord &move, vector<char **> &new_boards);
 		int is_on_board (int x, int y);
-		void print_board(char **board);
+		void print_board(char **board, char tile);
 		void free_board_mem(char **board);
 		void free_boards(vector<char **> new_boards);
+		int cal_weight(char **board, char tile);
 };
 #endif

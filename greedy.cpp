@@ -93,20 +93,40 @@ void Greedy::get_new_boards(char current_board[][GAMESIZE], char tile, coord &mo
 					new_board[x][y]	= tile;
 			}
 			new_boards.push_back(new_board);
-			print_board(new_board);	
+			print_board(new_board, tile);	
 		}
 	}
 }
-void Greedy::print_board(char **board)
+void Greedy::print_board(char **board, char tile)
 {
 	int k=0, m=0;
-	cout << "This board score is:"<<endl; 
+	cout << "This board weight is:"<<cal_weight(board, tile)<<endl; 
 	for(k=0; k<8; k++){
 		for(m=0; m<8; m++)
 			cout<<board[k][m];
 		cout<<endl;
 	}
 
+}
+int Greedy::cal_weight(char **board, char tile)
+{
+	int weight=0;
+	char other_tile;
+	if (tile == 'X')
+		other_tile = 'O';
+	else
+		other_tile = 'X';
+
+	for (int i=0; i< 8; i++){
+		for (int j = 0; j < 8 ; j++){
+			if(board[i][j]==tile)
+				weight+=weights[i][j];		
+			else if(board[i][j]==other_tile)
+				weight-=weights[i][j];		
+		}
+	}
+
+	return weight;
 }
 void Greedy::free_board_mem(char **board)
 {
@@ -117,9 +137,12 @@ void Greedy::free_board_mem(char **board)
 
 void Greedy::free_boards(vector<char **> new_boards)
 {
+	int count = 0;
 	for(vector<char **>::iterator it=new_boards.begin(); it!=new_boards.end(); ++it){
 		free_board_mem(*it);
+		count++;
 	}
+	cout << count << "boards are freed"<<endl;
 }
 vector<char **> Greedy::get_new_boards_vector(char current_board[][GAMESIZE], char tile)
 {

@@ -15,7 +15,7 @@
 using namespace std;
 
 
-extern int wetights[GAMESIZE][GAMESIZE];
+extern int weights[GAMESIZE][GAMESIZE];
 
 typedef struct coord_t{
 	int x;
