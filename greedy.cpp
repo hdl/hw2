@@ -2,27 +2,17 @@
 #include "agent.h"
 #include "greedy.h"
 
-Greedy::Greedy()
+Greedy::Greedy(Task &task_info)
 {
-	move_dirc[0].x=0;
-	move_dirc[0].y=1;
-	move_dirc[1].x=1;
-	move_dirc[1].y=1;
-	move_dirc[2].x=1;
-	move_dirc[2].y=0;
-	move_dirc[3].x=1;
-	move_dirc[3].y=-1;
-	move_dirc[4].x=0;
-	move_dirc[4].y=-1;
-	move_dirc[5].x=-1;
-	move_dirc[5].y=-1;
-	move_dirc[6].x=-1;
-	move_dirc[6].y=0;
-	move_dirc[7].x=-1;
-	move_dirc[7].y=1;
+	your_tile = task_info.your_player;
+	if (your_tile == 'X')
+		other_tile = 'O';
+	else
+		other_tile = 'X';
 }
 
-Greedy::~Greedy(){
+Greedy::~Greedy()
+{
 }
 int Greedy::is_on_board (int x, int y){
 	return (x >=0 && x < GAMESIZE && y >= 0 && y < GAMESIZE);
@@ -102,15 +92,9 @@ void Greedy::print_board(board_info &new_board)
 int Greedy::cal_weight(char **board, char tile)
 {
 	int weight=0;
-	char other_tile;
-	if (tile == 'X')
-		other_tile = 'O';
-	else
-		other_tile = 'X';
-
 	for (int i=0; i< 8; i++){
 		for (int j = 0; j < 8 ; j++){
-			if(board[i][j]==tile)
+			if(board[i][j]==your_tile)
 				weight+=weights[i][j];		
 			else if(board[i][j]==other_tile)
 				weight-=weights[i][j];		

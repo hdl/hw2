@@ -27,7 +27,9 @@ typedef struct board_info_t{
 	int weight;
 }board_info;
 extern int DEBUG;
+extern coord move_dirc[8];
 extern int weights[GAMESIZE][GAMESIZE];
+extern int compare_order(board_info &board1, board_info &board2);
 extern int compare_min_max(board_info &board1, board_info &board2);
 extern int compare_max_min(board_info &board1, board_info &board2);
 extern void free_board_mem(char **board);

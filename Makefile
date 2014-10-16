@@ -6,6 +6,8 @@ task.o:
 	g++ -g -Wall -c task.cpp
 greedy.o:
 	g++ -g -Wall -c greedy.cpp
+minmax.o:
+	g++ -g -Wall -c minmax.cpp
 run:
 	./agent
 	cat output.txt
