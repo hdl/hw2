@@ -23,8 +23,8 @@ int main()
 		Greedy greedy;
 		new_board_vector = greedy.get_new_boards_vector(task_info.cells, task_info.your_player);
 		sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
-		//for (vector<board_info>::iterator it=new_board_vector.begin(); it!=new_board_vector.end(); it++)
-		//	greedy.print_board(*it);
+		// for (vector<board_info>::iterator it=new_board_vector.begin(); it!=new_board_vector.end(); it++)
+		// 	greedy.print_board(*it);
 		cout<<greedy.print_only_board(new_board_vector[0].board);
 		free_boards(new_board_vector);
 	}
@@ -38,18 +38,15 @@ int compare_max_min(board_info &board1, board_info &board2)
 	if(board1.weight > board2.weight)
 		return 1;
 	else if(board1.weight == board2.weight){
-		if(board1.x<board2.x){
-			cout << "1.x<2.x"<<endl;
+		if(board1.x<board2.x)
 			return 1;
-		}
 		else if(board1.x==board2.x){
 			if(board1.y<board2.y)
 				return 1;
 			else
 				return 0;	
-		}else{
+		}else
 			return 0;
-		}
 	}
 	else
 		return 0;
