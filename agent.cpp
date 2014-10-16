@@ -1,7 +1,7 @@
 #include "task.h"
 #include "agent.h"
 #include "greedy.h"
-
+int DEBUG=1;
 int weights[GAMESIZE][GAMESIZE]={
 	{99, -8, 8, 6, 6, 8, -8, 99},
 	{-8, -24, -4, -3, -3, -4, -24, -8},
@@ -18,11 +18,75 @@ int main()
 {
 	Task task_info("input.txt");
 	task_info.PrintTaskInfo();
-	vector<char **> new_boards;
+	vector<board_info> new_board_vector;
 	if (task_info.task_no == 1){
 		Greedy greedy;
-		new_boards = greedy.get_new_boards_vector(task_info.cells, task_info.your_player);
-		greedy.free_boards(new_boards);
+		new_board_vector = greedy.get_new_boards_vector(task_info.cells, task_info.your_player);
+		sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
+		//for (vector<board_info>::iterator it=new_board_vector.begin(); it!=new_board_vector.end(); it++)
+		//	greedy.print_board(*it);
+		cout<<greedy.print_only_board(new_board_vector[0].board);
+		free_boards(new_board_vector);
 	}
+	// while(1);
 	return (0); 
+}
+
+
+int compare_max_min(board_info &board1, board_info &board2)
+{
+	if(board1.weight > board2.weight)
+		return 1;
+	else if(board1.weight == board2.weight){
+		if(board1.x<board2.x){
+			cout << "1.x<2.x"<<endl;
+			return 1;
+		}
+		else if(board1.x==board2.x){
+			if(board1.y<board2.y)
+				return 1;
+			else
+				return 0;	
+		}else{
+			return 0;
+		}
+	}
+	else
+		return 0;
+}
+
+int compare_min_max(board_info &board1, board_info &board2)
+{
+	if(board1.weight < board2.weight)
+		return 1;
+	else if(board1.weight == board2.weight){
+		if(board1.x<board2.x)
+			return 1;
+		else if(board1.x==board2.x){
+			if(board1.y<board2.y)
+				return 1;
+			else
+				return 0;	
+		}else
+			return 0;
+	}
+	else
+		return 0;
+}
+
+void free_board_mem(char **board)
+{
+	for (int j = 0; j < 8 ; j++)
+		delete[] board[j];
+	delete[] board;
+}
+
+void free_boards(vector<board_info> &new_board_vector)
+{
+	int count = 0;
+	for(vector<board_info>::iterator it=new_board_vector.begin(); it!=new_board_vector.end(); ++it){
+		free_board_mem(it->board);
+		count++;
+	}
+	cout << count << "boards are freed"<<endl;
 }

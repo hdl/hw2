@@ -9,12 +9,11 @@ class Greedy
 	    coord move_dirc[8];	
 		Greedy();
 		~Greedy();
-		vector<char **> get_new_boards_vector(char current_board[][GAMESIZE], char tile);
-		void get_new_boards(char current_board[][GAMESIZE], char tile, coord &move, vector<char **> &new_boards);
+		void get_new_boards(char current_board[][GAMESIZE], char tile, coord &move, vector<board_info> &new_board_vector);
+		vector<board_info> get_new_boards_vector(char current_board[][GAMESIZE], char tile);
 		int is_on_board (int x, int y);
-		void print_board(char **board, char tile);
-		void free_board_mem(char **board);
-		void free_boards(vector<char **> new_boards);
+		void print_board(board_info &new_board);
 		int cal_weight(char **board, char tile);
+        string print_only_board(char **board);
 };
 #endif
