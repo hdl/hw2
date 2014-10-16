@@ -2,31 +2,37 @@
 #include "agent.h"
 #include "greedy.h"
 
-Greedy::Greedy(Task &task_info)
-{
+int Greedy::is_on_board (int x, int y){
+	return (x >=0 && x < GAMESIZE && y >= 0 && y < GAMESIZE);
+}
+
+void Greedy::init(Task &task_info){
+	int j,k,m;
 	your_tile = task_info.your_player;
 	if (your_tile == 'X')
 		other_tile = 'O';
 	else
 		other_tile = 'X';
-}
 
-Greedy::~Greedy()
-{
-}
-int Greedy::is_on_board (int x, int y){
-	return (x >=0 && x < GAMESIZE && y >= 0 && y < GAMESIZE);
+	root_board.board = new char*[GAMESIZE];
+	for(j=0; j<GAMESIZE; j++)
+		root_board.board[j] = new char[GAMESIZE];
+	for(k=0; k<8; k++)
+		for(m=0; m<8; m++)
+			root_board.board[k][m] = task_info.cells[k][m];
+	root_board.weight = cal_weight(root_board.board);
+
 }
 
 // get all new_boards for a possible move
-void Greedy::get_new_boards(char current_board[][GAMESIZE], char tile, coord &move, vector<board_info> &new_board_vector)
+void Greedy::get_new_boards(board_info &current_board, char tile, coord &move, vector<board_info> &new_board_vector)
 {
 	int i=0, j=0;
 	int x=0, y=0;
 	int k=0, m=0;
 	char other_tile;
 	board_info new_board;
-	if (current_board[move.x][move.y] != '*'){
+	if (current_board.board[move.x][move.y] != '*'){
 		return ;
 	}
 
@@ -43,7 +49,7 @@ void Greedy::get_new_boards(char current_board[][GAMESIZE], char tile, coord &mo
 			new_board.board[j] = new char[GAMESIZE];
 		for(k=0; k<8; k++)
 			for(m=0; m<8; m++)
-				new_board.board[k][m] = current_board[k][m];
+				new_board.board[k][m] = current_board.board[k][m];
 
 		new_board.board[move.x][move.y] = tile;
 		x = move.x + move_dirc[i].x;
@@ -75,12 +81,12 @@ void Greedy::get_new_boards(char current_board[][GAMESIZE], char tile, coord &mo
 			new_board.x=move.x;
 			new_board.y=move.y;
 			new_board.tile=tile;
-			new_board.weight=cal_weight(new_board.board, new_board.tile);
+			new_board.weight=cal_weight(new_board.board);
 			new_board_vector.push_back(new_board);
-			if(DEBUG==1){
-				print_board(new_board);
-				cout << "-----------------------------"<<endl;
-			}	
+			// if(DEBUG==1){
+			// 	print_board(new_board);
+			// 	cout << "-----------------------------"<<endl;
+			// }	
 		}
 	}
 }
@@ -89,7 +95,7 @@ void Greedy::print_board(board_info &new_board)
 	cout << "Tile:"<<new_board.tile<< " Move:(" << new_board.x << ","<<new_board.y << ") Weight:"<< new_board.weight<<endl; 
 	cout << print_only_board(new_board.board);
 }
-int Greedy::cal_weight(char **board, char tile)
+int Greedy::cal_weight(char **board)
 {
 	int weight=0;
 	for (int i=0; i< 8; i++){
@@ -100,11 +106,10 @@ int Greedy::cal_weight(char **board, char tile)
 				weight-=weights[i][j];		
 		}
 	}
-
 	return weight;
 }
 
-vector<board_info> Greedy::get_new_boards_vector(char current_board[][GAMESIZE], char tile)
+vector<board_info> Greedy::get_new_boards_vector(board_info &current_board, char tile)
 {
 	int i=0, j=0;
 	coord move;

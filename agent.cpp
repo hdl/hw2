@@ -1,6 +1,8 @@
 #include "task.h"
 #include "agent.h"
 #include "greedy.h"
+#include "minmax.h"
+
 int DEBUG=1;
 int weights[GAMESIZE][GAMESIZE]={
 	{99, -8, 8, 6, 6, 8, -8, 99},
@@ -21,16 +23,20 @@ int main()
 	Task task_info("input.txt");
 	task_info.PrintTaskInfo();
 	vector<board_info> new_board_vector;
+	vector<board_info>::iterator it;
 	if (task_info.task_no == 1){
-		Greedy greedy(task_info);
-		new_board_vector = greedy.get_new_boards_vector(task_info.cells, task_info.your_player);
+		Greedy greedy;
+		greedy.init(task_info);
+		new_board_vector = greedy.get_new_boards_vector(greedy.root_board, task_info.your_player);
 		sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
-		// for (vector<board_info>::iterator it=new_board_vector.begin(); it!=new_board_vector.end(); it++)
-		// 	greedy.print_board(*it);
 		cout<<greedy.print_only_board(new_board_vector[0].board);
 		free_boards(new_board_vector);
+	}else if(task_info.task_no==2){
+		Minmax minmax;
+		minmax.init(task_info);
+	    minmax.run_min_max(minmax.root_board, minmax.depth, task_info.your_player);
 	}
-	// while(1);
+	//while(1);
 	return (0); 
 }
 

@@ -1,5 +1,5 @@
-agent: clean agent.o task.o greedy.o
-	g++ -g -o agent agent.o task.o greedy.o
+agent: clean agent.o task.o greedy.o minmax.o
+	g++ -g -o agent agent.o task.o greedy.o minmax.o
 agent.o:
 	g++ -g -Wall -c agent.cpp 
 task.o:

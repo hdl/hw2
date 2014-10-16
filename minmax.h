@@ -1,5 +1,5 @@
-#ifndef GREEDY_H
-#define GREEDY_H
+#ifndef MINMAX_H
+#define MINMAX_H
 #include "agent.h"
 #include "greedy.h"
 using namespace std;
@@ -7,16 +7,12 @@ class Minmax: public Greedy
 {
 	public:
 		int depth;
-		char tile;
-		char other_tile;
-		Minmax(Task &task_info);
-// get_new_boards(char current_board[][GAMESIZE], char tile, 
-// get_new_boards_vector(char current_board[][GAMESIZE], char tile);
-// int is_on_board (int x, int y);
-// void print_board(board_info &new_board);
-// int cal_weight(char **board, char tile);
-// string print_only_board(char **board);
-
+		vector <board_info>board_in_depth;
+		void init(Task &task_info);
+		board_info choose_min_child(board_info &board1, board_info &board2);
+		board_info choose_max_child(board_info &board1, board_info &board2);
+		board_info run_min_max(board_info current_board, int depth, char tile);
+		string xy2board_number(int x, int y);
 
 };
 #endif
