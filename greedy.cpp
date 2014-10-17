@@ -32,6 +32,7 @@ void Greedy::get_new_boards(board_info &current_board, char tile, coord &move, v
 	int k=0, m=0;
 	char other_tile;
 	board_info new_board;
+	new_board.visited=0;
 	if (current_board.board[move.x][move.y] != '*'){
 		return ;
 	}
