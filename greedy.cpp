@@ -1,10 +1,7 @@
 #include "task.h"
 #include "agent.h"
 #include "greedy.h"
-
-int Greedy::is_on_board (int x, int y){
-	return (x >=0 && x < GAMESIZE && y >= 0 && y < GAMESIZE);
-}
+#include "board_info.h"
 
 void Greedy::init(Task &task_info){
 	int j,k,m;
@@ -21,33 +18,18 @@ void Greedy::init(Task &task_info){
 	for(k=0; k<8; k++)
 		for(m=0; m<8; m++)
 			root_board.board[k][m] = task_info.cells[k][m];
-	root_board.weight = cal_weight(root_board.board);
-	init_board_info(root_board);
-
+	root_board.cal_weight(task_info.your_player);
+	root_board.tile=your_tile;
 }
 
-void Greedy::init_board_info(board_info &board)
-{
-
-	board.x=-1;
-	board.y=-1;
-	//tile = 0;
-	//board.board = NULL;
-	//weight = 1;
-	board.visited = 0;
-	board.best_child_x = -1;
-	board.best_child_y = -1;
-}
-
-// get all new_boards for a possible move
-void Greedy::get_new_boards(board_info &current_board, char tile, coord &move, vector<board_info> &new_board_vector)
+// get all new_boards for a possible move in his every direction
+void Greedy::get_new_boards(char task_your_player, Board_info &current_board, char tile, coord &move, vector<Board_info> &new_board_vector)
 {
 	int i=0, j=0;
 	int x=0, y=0;
 	int k=0, m=0;
 	char other_tile;
-	board_info new_board;
-	init_board_info(new_board);
+	Board_info new_board;
 	if (current_board.board[move.x][move.y] != '*'){
 		return ;
 	}
@@ -66,22 +48,22 @@ void Greedy::get_new_boards(board_info &current_board, char tile, coord &move, v
 		for(k=0; k<8; k++)
 			for(m=0; m<8; m++)
 				new_board.board[k][m] = current_board.board[k][m];
-
 		new_board.board[move.x][move.y] = tile;
+
 		x = move.x + move_dirc[i].x;
 		y = move.y + move_dirc[i].y;
 		// make sure neighbour on this direction is not your tile
-		if (!is_on_board(x, y) || new_board.board[x][y]!=other_tile){
+		if (!new_board.is_on_board(x, y) || new_board.board[x][y]!=other_tile){
 			free_board_mem(new_board.board);
 			continue;		
 		}
 		// go foward from this direction
 		// 1. reach your til  2. reach other tile  3. reach * 4. out of the board 
-		while (is_on_board(x,y) && new_board.board[x][y] == other_tile){
+		while (new_board.is_on_board(x,y) && new_board.board[x][y] == other_tile){
 			x += move_dirc[i].x;
 			y += move_dirc[i].y;
 		}
-		if (!is_on_board(x, y) || new_board.board[x][y] == '*' ){
+		if (!new_board.is_on_board(x, y) || new_board.board[x][y] == '*' ){
 			free_board_mem(new_board.board);
 			continue;		
 		}
@@ -97,59 +79,25 @@ void Greedy::get_new_boards(board_info &current_board, char tile, coord &move, v
 			new_board.x=move.x;
 			new_board.y=move.y;
 			new_board.tile=tile;
-			new_board.weight=cal_weight(new_board.board);
-			new_board.visited=0;
+			new_board.cal_weight(task_your_player);
 			new_board_vector.push_back(new_board);
-			// if(DEBUG==1){
-			// 	print_board(new_board);
-			// 	cout << "-----------------------------"<<endl;
-			// }	
 		}
 	}
-}
-void Greedy::print_board(board_info &new_board)
-{
-	cout << "Tile:"<<new_board.tile<< " Move:(" << new_board.x << ","<<new_board.y << ") Weight:"<< new_board.weight<<endl; 
-	cout << print_only_board(new_board.board);
-}
-int Greedy::cal_weight(char **board)
-{
-	int weight=0;
-	for (int i=0; i< 8; i++){
-		for (int j = 0; j < 8 ; j++){
-			if(board[i][j]==your_tile)
-				weight+=weights[i][j];		
-			else if(board[i][j]==other_tile)
-				weight-=weights[i][j];		
-		}
-	}
-	return weight;
 }
 
-vector<board_info> Greedy::get_new_boards_vector(board_info &current_board, char tile)
+vector<Board_info> Greedy::get_new_boards_vector(char task_your_player, Board_info &current_board, char tile)
 {
 	int i=0, j=0;
 	coord move;
-	vector<board_info> new_board_vector;
+	vector<Board_info> new_board_vector;
 	new_board_vector.clear();
 	for(i=0; i<GAMESIZE; i++){
 		for(j=0; j<GAMESIZE; j++){
 			move.x=i;
 			move.y=j;
-			get_new_boards(current_board, tile, move, new_board_vector);
+			get_new_boards(task_your_player, current_board, tile, move, new_board_vector);
 		}
 	}
 	return new_board_vector;
-}
-
-string Greedy::print_only_board(char **board){
-	int k,m;
-	string output="";
-	for(k=0; k<8; k++){
-		for(m=0; m<8; m++)
-			output+=board[k][m];
-		output+='\n';
-	}
-	return output;
 }
 
