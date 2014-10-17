@@ -27,6 +27,7 @@ typedef struct board_info_t{
 	char **board;
 	int weight;
 	int visited;
+	struct board_info_t *best_child;
 }board_info;
 extern int DEBUG;
 extern coord move_dirc[8];
