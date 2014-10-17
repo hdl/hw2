@@ -86,3 +86,19 @@ string Minmax::xy2(int x, int y)
 	return result;	
 }
 
+string Minmax::get_next_state(Task &task_info, int x, int y)
+{
+	string output="";
+	int j,k,m;
+	char **board;
+		board = new char*[GAMESIZE];
+		for(j=0; j<GAMESIZE; j++)
+			board[j] = new char[GAMESIZE];
+		for(k=0; k<8; k++)
+			for(m=0; m<8; m++)
+				board[k][m] = task_info.cells[k][m];
+		board[x][y] = your_tile;
+	output = print_only_board(board);
+	free_board_mem(board);
+	return output;
+}

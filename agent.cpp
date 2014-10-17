@@ -38,8 +38,9 @@ int main()
 	    next_state=minmax.run_min_max(minmax.root_board, minmax.depth, task_info.your_player);
 		cout<<minmax.xy2(next_state.origin_x, next_state.origin_y)<<endl;
 		cout<<minmax.ss.str();
+		cout<<minmax.get_next_state(task_info, next_state.origin_x, next_state.origin_y);
 	}
-	//while(1);
+	while(1);
 	return (0); 
 }
 
