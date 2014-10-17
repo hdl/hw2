@@ -6,10 +6,7 @@ using namespace std;
 class Minmax: public Greedy
 {
 	public:
-		int depth;
 		stringstream ss;
-		vector <board_info> best_board_in_depth;
-		void init(Task &task_info);
 		board_info choose_min_child(board_info &board1, board_info &board2);
 		board_info choose_max_child(board_info &board1, board_info &board2);
 		board_info run_min_max(board_info &current_board, int depth, char tile);

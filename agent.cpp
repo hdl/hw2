@@ -29,18 +29,22 @@ int main()
 		Greedy greedy;
 		greedy.init(task_info);
 		new_board_vector = greedy.get_new_boards_vector(greedy.root_board, task_info.your_player);
-		sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
-		cout<<greedy.print_only_board(new_board_vector[0].board);
-		free_boards(new_board_vector);
+		if(new_board_vector.size() != 0){
+			sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
+			cout<<greedy.print_only_board(new_board_vector[0].board);
+			free_boards(new_board_vector);
+		}else
+			cout<<"pass"<<endl;
 	}else if(task_info.task_no==2){
 		Minmax minmax;
 		minmax.init(task_info);
-	    next_state=minmax.run_min_max(minmax.root_board, minmax.depth, task_info.your_player);
-		cout<<minmax.xy2(next_state.origin_x, next_state.origin_y)<<endl;
+		minmax.init_board_info(next_state);
+	    next_state=minmax.run_min_max(minmax.root_board, minmax.depth, minmax.your_tile);
+		cout<<minmax.xy2(next_state.best_child_x, next_state.best_child_y)<< " weight:"<< next_state.weight<<endl;
 		cout<<minmax.ss.str();
-		cout<<minmax.get_next_state(task_info, next_state.origin_x, next_state.origin_y);
+		//cout<<minmax.get_next_state(task_info, next_state.x, next_state.y);
 	}
-	while(1);
+	//while(1);
 	return (0); 
 }
 

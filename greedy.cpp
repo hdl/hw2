@@ -8,6 +8,7 @@ int Greedy::is_on_board (int x, int y){
 
 void Greedy::init(Task &task_info){
 	int j,k,m;
+	depth = task_info.cut_off_depth;
 	your_tile = task_info.your_player;
 	if (your_tile == 'X')
 		other_tile = 'O';
@@ -21,8 +22,21 @@ void Greedy::init(Task &task_info){
 		for(m=0; m<8; m++)
 			root_board.board[k][m] = task_info.cells[k][m];
 	root_board.weight = cal_weight(root_board.board);
-	root_board.visited = 0;
+	init_board_info(root_board);
 
+}
+
+void Greedy::init_board_info(board_info &board)
+{
+
+	board.x=-1;
+	board.y=-1;
+	//tile = 0;
+	//board.board = NULL;
+	//weight = 1;
+	board.visited = 0;
+	board.best_child_x = -1;
+	board.best_child_y = -1;
 }
 
 // get all new_boards for a possible move
@@ -33,7 +47,7 @@ void Greedy::get_new_boards(board_info &current_board, char tile, coord &move, v
 	int k=0, m=0;
 	char other_tile;
 	board_info new_board;
-	new_board.visited=0;
+	init_board_info(new_board);
 	if (current_board.board[move.x][move.y] != '*'){
 		return ;
 	}
