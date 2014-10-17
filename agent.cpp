@@ -22,6 +22,7 @@ int main()
 {
 	Task task_info("input.txt");
 	task_info.PrintTaskInfo();
+	board_info next_state;
 	vector<board_info> new_board_vector;
 	vector<board_info>::iterator it;
 	if (task_info.task_no == 1){
@@ -34,7 +35,9 @@ int main()
 	}else if(task_info.task_no==2){
 		Minmax minmax;
 		minmax.init(task_info);
-	    minmax.run_min_max(minmax.root_board, minmax.depth, task_info.your_player);
+	    next_state=minmax.run_min_max(minmax.root_board, minmax.depth, task_info.your_player);
+		cout<<minmax.xy2(next_state.origin_x, next_state.origin_y)<<endl;
+		cout<<minmax.ss.str();
 	}
 	//while(1);
 	return (0); 
@@ -66,7 +69,7 @@ int compare_order(board_info &board1, board_info &board2)
 	if(board1.x<board2.x)
 		return 1;
 	else if(board1.x==board2.x){
-		if(board1.y<board2.y)
+		if(board1.y<=board2.y)
 			return 1;
 		else
 			return 0;	

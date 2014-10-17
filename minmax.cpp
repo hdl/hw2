@@ -18,13 +18,15 @@ board_info Minmax::run_min_max(board_info &current_board, int depth, char tile)
 
 	if (depth == 0){
 		current_board.visited = 1;
-		cout << tile << ","<< xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
+		ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
 	}else{
 		if(current_board.visited==0){
 			current_board.visited = 1;
-			cout << tile << ","<< xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< "Infinity"<<endl;
-		}else
-			cout << tile << ","<< xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
+			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
+			ss << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
+		}else{
+			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
+		}
 	}
 
 	if(depth == 0) // or node is a terminal node
@@ -36,20 +38,24 @@ board_info Minmax::run_min_max(board_info &current_board, int depth, char tile)
 	if(tile == your_tile){
 		best_child.weight = -INFI;
 		for(child=children.begin(); child != children.end(); ++child){
-			temp_child = run_min_max(*child, depth -1, other_tile);	
+			temp_child = run_min_max(*child, depth -1, other_tile);
+			temp_child.origin_x=child->x;
+			temp_child.origin_y=child->y;
 			best_child = choose_max_child(best_child, temp_child);
-			cout << tile << ","<< xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
+			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
 		}		
 	}else{
 		best_child.weight = INFI;
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_min_max(*child, depth -1, your_tile);	
+			temp_child.origin_x=child->x;
+			temp_child.origin_y=child->y;
 			best_child = choose_min_child(best_child, temp_child);
-			cout << tile << ","<< xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
+			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
 		}
 	}
-	
-	free_boards(children);		
+	free_boards(children);
+    // cout<<xy2(best_child.origin_x, best_child.origin_y)<<endl;	
 	return best_child;
 }
 

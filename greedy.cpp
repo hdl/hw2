@@ -85,7 +85,6 @@ void Greedy::get_new_boards(board_info &current_board, char tile, coord &move, v
 			new_board.tile=tile;
 			new_board.weight=cal_weight(new_board.board);
 			new_board.visited=0;
-			new_board.best_child = NULL;
 			new_board_vector.push_back(new_board);
 			// if(DEBUG==1){
 			// 	print_board(new_board);
