@@ -51,6 +51,8 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 			best_child = max_a(best_child, temp_child);
 			cout << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<",";
 			cout <<ab2(best_child.a,best_child.b)<<"--"<<endl;
+			if(best_child.b<=best_child.a)
+				break;
 		}		
 	}else{
 		for(child=children.begin(); child != children.end(); ++child){
@@ -58,6 +60,8 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 			best_child = min_b(best_child, temp_child);
 			cout << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<",";
 			cout <<ab2(best_child.a,best_child.b)<<"---"<<endl;
+			if(best_child.b<=best_child.a)
+				break;
 		}
 	}
 	free_boards(children);
