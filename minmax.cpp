@@ -16,9 +16,11 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 			current_board.visited = 1;
 			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
 			ss << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
-		}else{
-			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
 		}
+		
+		//else{
+		//	ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
+		//}
 	}
 
 	if(depth == 0) // or node is a terminal node
