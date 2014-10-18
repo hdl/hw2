@@ -65,10 +65,10 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	current_board.weight = best_child.weight;
 	current_board.best_child_x = best_child.x;	
 	current_board.best_child_y = best_child.y;
-	if(tile != your_tile)
-		current_board.a = best_child.b;
-	else
+	if(tile == your_tile)
 		current_board.b = best_child.a;
+	else
+		current_board.a = best_child.b;
 	cout << xy2(current_board.x, current_board.y) <<":"<< xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
 	return current_board;
 }
