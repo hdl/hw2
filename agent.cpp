@@ -42,9 +42,10 @@ int main()
 		cout<<minmax.xy2(next_state.best_child_x, next_state.best_child_y)<< " weight:"<< next_state.weight<<endl;
 		cout<<minmax.ss.str();
 		cout<<minmax.get_next_state(task_info, next_state.best_child_x, next_state.best_child_y);
-		minmax.root_board.print();
+		// minmax.root_board.print();
+		// free_board_mem(minmax.root_board.board);
 	}
-	while(1);
+	// while(1);
 	return (0); 
 }
 

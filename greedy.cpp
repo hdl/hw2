@@ -3,6 +3,10 @@
 #include "greedy.h"
 #include "Board_info.h"
 
+Greedy::~Greedy()
+{
+	free_board_mem(this->root_board.board);
+}
 void Greedy::init(Task &task_info){
 	int j,k,m;
 	depth = task_info.cut_off_depth;

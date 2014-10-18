@@ -9,6 +9,7 @@ class Greedy
 		char your_tile;
 		char other_tile;
 		int depth;
+		~Greedy();
 		Board_info root_board;
 		void init(Task &task_info);
 		void get_new_boards(char task_your_player, Board_info &current_board, char tile, coord &move, vector<Board_info> &new_board_vector);

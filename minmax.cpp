@@ -2,7 +2,6 @@
 #include "agent.h"
 #include "minmax.h"
 #include "board_info.h"
-
 Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 {
 	Board_info best_child, temp_child;
