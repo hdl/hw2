@@ -8,6 +8,8 @@ greedy.o:
 	g++ -g -Wall -c greedy.cpp
 minmax.o:
 	g++ -g -Wall -c minmax.cpp
+alphabeta.o:
+	g++ -g -Wall -c alphabeta.cpp
 board_info.o:
 	g++ -g -Wall -c board_info.cpp
 run:

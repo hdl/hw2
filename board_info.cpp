@@ -15,6 +15,8 @@ Board_info::Board_info()
 	visited = 0;
 	best_child_x = -1;
 	best_child_y = -1;
+	a = -INFI;
+	b = INFI;
 }
 
 void Board_info::cal_weight(char your_tile)

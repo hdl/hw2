@@ -13,6 +13,8 @@ class Board_info
 		int visited;
 		int best_child_x;
 		int best_child_y;
+		int a;
+		int b;
 		Board_info();
 		void cal_weight(char your_tile);
 		static string get_board_cells(char **board);

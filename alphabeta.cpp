@@ -1,8 +1,8 @@
 #include "task.h"
 #include "agent.h"
-#include "minmax.h"
+#include "alphabeta.h"
 #include "board_info.h"
-Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
+Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a, int b, char tile)
 {
 	Board_info best_child, temp_child;
 	vector<Board_info> children;
@@ -21,25 +21,36 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 		}
 	}
 
-	if(depth == 0) // or node is a terminal node
+	if(depth == 0){
+	    if(tile == your_tile)
+			current_board.b=current_board.weight;
+		else
+			current_board.a=current_board.weight;	
 		return current_board;
+	}
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
 	// it's possible get 0 child
-	sort(children.begin(), children.end(), compare_order);
+	if(children.size() == 0){
+		cout<<"no children"<<endl;
+		current_board.print();
+		exit(0);
+	}else{
+		sort(children.begin(), children.end(), compare_order);
+	}
 
 	if(tile == your_tile){
-		best_child.weight = -INFI;
+		best_child.a = a;
 		for(child=children.begin(); child != children.end(); ++child){
-			temp_child = run_min_max(*child, depth -1, other_tile);
-			best_child = choose_max_child(best_child, temp_child);
+			temp_child = run_alphabeta(*child, depth -1, a, b, other_tile);
+			best_child = max_a(best_child, temp_child);
 			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
 		}		
 	}else{
-		best_child.weight = INFI;
+		best_child.weight = b;
 		for(child=children.begin(); child != children.end(); ++child){
-			temp_child = run_min_max(*child, depth -1, your_tile);	
-			best_child = choose_min_child(best_child, temp_child);
+			temp_child = run_alphabeta(*child, depth -1, a, b, your_tile);	
+			best_child = min_b(best_child, temp_child);
 			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
 		}
 	}
@@ -48,52 +59,47 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	current_board.weight = best_child.weight;
 	current_board.best_child_x = best_child.x;	
 	current_board.best_child_y = best_child.y;
+	current_board.a = best_child.a;
+	current_board.b = best_child.b;
 	cout << xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
 	return current_board;
 }
 
-Board_info Minmax::choose_max_child(Board_info &board1, Board_info &board2)
+Board_info Alphabeta::max_a(Board_info &board1, Board_info &board2)
 {
-	if(compare_max_min(board1, board2)==1)
+	if(compare_max_a(board1, board2)==1)
+		return board1;
+	else
+		return board2;
+}
+
+Board_info Alphabeta::min_b(Board_info &board1, Board_info &board2)
+{
+	if(compare_min_b(board1, board2)==1)
 		return board1;
 	else
 		return board2;
 }
 
 
-Board_info Minmax::choose_min_child(Board_info &board1, Board_info &board2)
+int Alphabeta::compare_max_a(const Board_info &board1, const Board_info &board2)
 {
-	if(compare_min_max(board1, board2)==1)
-		return board1;
+	if(board1.a > board2.a)
+		return 1;
+	else if(board1.a == board2.a)
+		return compare_order(board1, board2);
 	else
-		return board2;
+		return 0;
 }
 
-string Minmax::xy2(int x, int y)
+int Alphabeta::compare_min_b(const Board_info &board1, const Board_info &board2)
 {
-	string result="";
-	if(x==-1 && y==-1)
-		return "root";
-	result.append(1, 'a'+y);
-	result.append(1, '1'+x);
-	return result;	
+	if(board1.b < board2.b)
+		return 1;
+	else if(board1.b == board2.b)
+		return compare_order(board1, board2);
+	else
+		return 0;
 }
 
-string Minmax::get_next_state(Task &task_info, int x, int y)
-{
-	string output="";
-	int j,k,m;
-	char **board;
-	board = new char*[GAMESIZE];
-	if(!Board_info::is_on_board(x,y))
-		return "is not on board, -1 -1? \n";
-	for(j=0; j<GAMESIZE; j++)
-		board[j] = new char[GAMESIZE];
-	for(k=0; k<8; k++)
-		for(m=0; m<8; m++)
-			board[k][m] = task_info.cells[k][m];
-	board[x][y] = your_tile;
-	output = Board_info::get_board_cells(board);
-	free_board_mem(board);
-	return output;
-}
+
