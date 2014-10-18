@@ -59,7 +59,7 @@ void Board_info::print(void)
 	cout<<" weight:"<<weight;
 	cout<<" visited:"<<visited;
 	cout<<" "<<best_child_x<<","<<best_child_y<<endl;
-	cout<<get_board_cells(board);
+	//cout<<get_board_cells(board);
 	cout<<"---------------------------end"<<endl;
 }
 

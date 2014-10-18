@@ -2,6 +2,7 @@
 #include "agent.h"
 #include "greedy.h"
 #include "minmax.h"
+#include "alphabeta.h"
 
 int DEBUG=1;
 int weights[GAMESIZE][GAMESIZE]={
@@ -42,6 +43,15 @@ int main()
 		cout<<minmax.xy2(next_state.best_child_x, next_state.best_child_y)<< " weight:"<< next_state.weight<<endl;
 		cout<<minmax.ss.str();
 		cout<<minmax.get_next_state(task_info, next_state.best_child_x, next_state.best_child_y);
+		// minmax.root_board.print();
+		// free_board_mem(minmax.root_board.board);
+	}else if(task_info.task_no==3){
+		Alphabeta alphabeta;
+		alphabeta.init(task_info);
+	    next_state=alphabeta.run_alphabeta(alphabeta.root_board, alphabeta.depth, -INFI, INFI,alphabeta.your_tile);
+		cout<<alphabeta.xy2(next_state.best_child_x, next_state.best_child_y)<< " weight:"<< next_state.weight<<endl;
+		cout<<alphabeta.ss.str();
+		cout<<alphabeta.get_next_state(task_info, next_state.best_child_x, next_state.best_child_y);
 		// minmax.root_board.print();
 		// free_board_mem(minmax.root_board.board);
 	}

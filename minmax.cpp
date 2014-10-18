@@ -48,7 +48,7 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	current_board.weight = best_child.weight;
 	current_board.best_child_x = best_child.x;	
 	current_board.best_child_y = best_child.y;
-	cout << xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
+	cout << xy2(current_board.x, current_board.y) << ","<<xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
 	return current_board;
 }
 
