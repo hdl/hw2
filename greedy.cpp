@@ -1,7 +1,7 @@
 #include "task.h"
 #include "agent.h"
 #include "greedy.h"
-#include "Board_info.h"
+#include "board_info.h"
 
 Greedy::~Greedy()
 {
