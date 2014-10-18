@@ -15,7 +15,8 @@ class Board_info
 		int best_child_y;
 		Board_info();
 		void cal_weight(char your_tile);
-		string get_board_cells();
-		int is_on_board (int x, int y);
+		static string get_board_cells(char **board);
+		static int is_on_board (int x, int y);
+		void print(void);
 };
 #endif

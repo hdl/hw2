@@ -24,6 +24,8 @@ void Board_info::cal_weight(char your_tile)
 		other_tile = 'O';
 	else
 		other_tile = 'X';
+	
+	weight = 0;
 	for (int i=0; i< 8; i++){
 		for (int j = 0; j < 8 ; j++){
 			if(board[i][j]==your_tile)
@@ -34,7 +36,7 @@ void Board_info::cal_weight(char your_tile)
 	}
 }
 
-string Board_info::get_board_cells(){
+string Board_info::get_board_cells(char **board){
 	int k,m;
 	string output="";
 	if(board == NULL)
@@ -45,5 +47,16 @@ string Board_info::get_board_cells(){
 		output+='\n';
 	}
 	return output;
+}
+
+void Board_info::print(void)
+{
+	cout<<"tile:"<<tile;
+	cout<<" "<<x<<","<<y;
+	cout<<" weight:"<<weight;
+	cout<<" visited:"<<visited;
+	cout<<" "<<best_child_x<<","<<best_child_y<<endl;
+	cout<<get_board_cells(board);
+	cout<<"-------------end---------------"<<endl;
 }
 

@@ -1,7 +1,7 @@
 #include "task.h"
 #include "agent.h"
 #include "greedy.h"
-#include "board_info.h"
+#include "Board_info.h"
 
 void Greedy::init(Task &task_info){
 	int j,k,m;
@@ -53,17 +53,17 @@ void Greedy::get_new_boards(char task_your_player, Board_info &current_board, ch
 		x = move.x + move_dirc[i].x;
 		y = move.y + move_dirc[i].y;
 		// make sure neighbour on this direction is not your tile
-		if (!new_board.is_on_board(x, y) || new_board.board[x][y]!=other_tile){
+		if (!Board_info::is_on_board(x, y) || new_board.board[x][y]!=other_tile){
 			free_board_mem(new_board.board);
 			continue;		
 		}
 		// go foward from this direction
 		// 1. reach your til  2. reach other tile  3. reach * 4. out of the board 
-		while (new_board.is_on_board(x,y) && new_board.board[x][y] == other_tile){
+		while (Board_info::is_on_board(x,y) && new_board.board[x][y] == other_tile){
 			x += move_dirc[i].x;
 			y += move_dirc[i].y;
 		}
-		if (!new_board.is_on_board(x, y) || new_board.board[x][y] == '*' ){
+		if (!Board_info::is_on_board(x, y) || new_board.board[x][y] == '*' ){
 			free_board_mem(new_board.board);
 			continue;		
 		}
@@ -80,6 +80,7 @@ void Greedy::get_new_boards(char task_your_player, Board_info &current_board, ch
 			new_board.y=move.y;
 			new_board.tile=tile;
 			new_board.cal_weight(task_your_player);
+			//new_board.print();
 			new_board_vector.push_back(new_board);
 		}
 	}
