@@ -12,6 +12,5 @@ board_info.o:
 	g++ -g -Wall -c board_info.cpp
 run:
 	./agent
-	cat output.txt
 clean:
 	rm -rf agent *.o

@@ -50,7 +50,7 @@ int main()
 }
 
 
-int compare_max_min(Board_info &board1, Board_info &board2)
+int compare_max_min(const Board_info &board1, const Board_info &board2)
 {
 	if(board1.weight > board2.weight)
 		return 1;
@@ -60,7 +60,7 @@ int compare_max_min(Board_info &board1, Board_info &board2)
 		return 0;
 }
 
-int compare_min_max(Board_info &board1, Board_info &board2)
+int compare_min_max(const Board_info &board1, const Board_info &board2)
 {
 	if(board1.weight < board2.weight)
 		return 1;
@@ -70,7 +70,7 @@ int compare_min_max(Board_info &board1, Board_info &board2)
 		return 0;
 }
 
-int compare_order(Board_info &board1, Board_info &board2)
+int compare_order(const Board_info &board1, const Board_info &board2)
 {
 	if(board1.x<board2.x)
 		return 1;

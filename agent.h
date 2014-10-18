@@ -24,9 +24,9 @@ typedef struct coord_t{
 extern int DEBUG;
 extern coord move_dirc[8];
 extern int weights[GAMESIZE][GAMESIZE];
-extern int compare_order(Board_info &board1, Board_info &board2);
-extern int compare_min_max(Board_info &board1, Board_info &board2);
-extern int compare_max_min(Board_info &board1, Board_info &board2);
+extern int compare_order(const Board_info &board1, const Board_info &board2);
+extern int compare_min_max(const Board_info &board1, const Board_info &board2);
+extern int compare_max_min(const Board_info &board1, const Board_info &board2);
 extern void free_board_mem(char **board);
 extern void free_boards(vector<Board_info> &new_board_vector);
 #endif
