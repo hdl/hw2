@@ -4,7 +4,7 @@
 #include "board_info.h"
 Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a, int b, char tile)
 {
-	Board_info best_child, temp_child;
+	Board_info for_match, best_child, temp_child;
 	vector<Board_info> children;
 	vector<Board_info>::iterator child;
 	int break_flag=0;
@@ -48,13 +48,14 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	best_child.b = b;
 	if(tile == your_tile){
 		for(child=children.begin(); child != children.end(); ++child){
+			for_match = best_child;
 			temp_child = run_alphabeta(*child, depth -1, best_child.a, best_child.b, other_tile);
 			best_child = max_a(best_child, temp_child);
 			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<",";
 			if(best_child.b<=best_child.a){
-				cout<<"prune form:"<<xy2(best_child.x, best_child.y)<<endl;
+				cout<<"prune form:"<<xy2(best_child.x, best_child.y)<<" ";
 				break_flag = 1;
-				(DEBUG?cout:log) <<ab2(a,b)<<endl;
+				(DEBUG?cout:log) <<ab2(for_match.a,for_match.b)<<endl;
 				break;
 			}else{
 				(DEBUG?cout:log) <<ab2(best_child.a,best_child.b)<<endl;
@@ -62,15 +63,12 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		}		
 	}else{
 		for(child=children.begin(); child != children.end(); ++child){
-			Board_info for_match = best_child;
+			for_match = best_child;
 			temp_child = run_alphabeta(*child, depth -1, best_child.a, best_child.b, your_tile);	
 			best_child = min_b(best_child, temp_child);
 			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<",";
-			// if(best_child.b<=best_child.a && child!=children.end()-1){
 			if(best_child.b<=best_child.a){
 				cout<<"prune form:"<<xy2(best_child.x, best_child.y)<<" ";
-				if(xy2(best_child.x, best_child.y)=="f6")
-					cout<<"match";
 				break_flag = 1;
 				(DEBUG?cout:log) <<ab2(for_match.a,for_match.b)<<endl;
 				break;

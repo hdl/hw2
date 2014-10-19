@@ -10,7 +10,7 @@ use strict;
 my $refdir = "./reference"; # directory where the reference files are
 
 # First build:
-my $student = shift;
+my $student = ".";
 chdir($student);
 
 print STDERR "#################### Start compilation for ${student} ####################\n";
