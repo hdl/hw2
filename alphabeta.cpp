@@ -19,14 +19,14 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 			current_board.a=current_board.weight;
 			current_board.b=b;
 		}
-		log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<",";
-		log << ab2(a, b)<<endl;
+		(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<",";
+		(DEBUG?cout:log) << ab2(a, b)<<endl;
 	}else{
 		if(current_board.visited==0){
 			current_board.visited = 1;
-			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
-			log << (tile == your_tile ?"-":"")<<"Infinity,";
-			log <<ab2(a,b) <<endl;
+			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
+			(DEBUG?cout:log) << (tile == your_tile ?"-":"")<<"Infinity,";
+			(DEBUG?cout:log) <<ab2(a,b) <<endl;
 		}
 	}
 
@@ -35,7 +35,7 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	}
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
-	// it's pologible get 0 child
+	// it's pocoutible get 0 child
 	if(children.size() == 0){
 		cout<<"no children"<<endl;
 		current_board.print();
@@ -50,24 +50,28 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_alphabeta(*child, depth -1, best_child.a, best_child.b, other_tile);
 			best_child = max_a(best_child, temp_child);
-			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<",";
-			log <<ab2(best_child.a,best_child.b)<<endl;
+			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<",";
 			if(best_child.b<=best_child.a){
 				cout<<"prune form:"<<xy2(best_child.x, best_child.y)<<endl;
 				break_flag = 1;
+				(DEBUG?cout:log) <<ab2(current_board.a,current_board.b)<<endl;
 				break;
+			}else{
+				(DEBUG?cout:log) <<ab2(best_child.a,best_child.b)<<endl;
 			}
 		}		
 	}else{
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_alphabeta(*child, depth -1, best_child.a, best_child.b, your_tile);	
 			best_child = min_b(best_child, temp_child);
-			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<",";
-			log <<ab2(best_child.a,best_child.b)<<endl;
+			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<",";
 			if(best_child.b<=best_child.a){
 				cout<<"prune form:"<<xy2(best_child.x, best_child.y)<<endl;
 				break_flag = 1;
+				(DEBUG?cout:log) <<ab2(current_board.a,current_board.b)<<endl;
 				break;
+			}else{
+				(DEBUG?cout:log) <<ab2(best_child.a,best_child.b)<<endl;
 			}
 		}
 	}
