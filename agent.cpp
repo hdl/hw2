@@ -40,7 +40,7 @@ int main()
 	}else if(task_info.task_no==3){
 		Alphabeta alphabeta;
 		alphabeta.init(task_info);
-	    next_state=alphabeta.run_alphabeta(alphabeta.root_board, alphabeta.depth, -INFI, INFI,alphabeta.your_tile);
+	    next_state=alphabeta.run_alphabeta(alphabeta.root_board, alphabeta.depth, -INFI, INFI, alphabeta.your_tile);
 		output_file<<alphabeta.get_next_state(task_info, next_state.best_child_x, next_state.best_child_y);
 		output_file<<alphabeta_prompt;
 		output_file<<alphabeta.log.str();

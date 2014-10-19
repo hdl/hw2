@@ -83,19 +83,19 @@ string Minmax::xy2(int x, int y)
 
 string Minmax::get_next_state(Task &task_info, int x, int y)
 {
-	string output="";
-	int j,k,m;
-	char **board;
-	board = new char*[GAMESIZE];
-	if(!Board_info::is_on_board(x,y))
-		return "is not on board, -1 -1? \n";
-	for(j=0; j<GAMESIZE; j++)
-		board[j] = new char[GAMESIZE];
-	for(k=0; k<8; k++)
-		for(m=0; m<8; m++)
-			board[k][m] = task_info.cells[k][m];
-	board[x][y] = your_tile;
-	output = Board_info::get_board_cells(board);
-	free_board_mem(board);
-	return output;
+	vector<Board_info> new_board_vector;
+	vector<Board_info>::iterator it;
+	string result="";
+	new_board_vector = get_new_boards_vector(your_tile, root_board, your_tile);
+	for(it=new_board_vector.begin(); it!=new_board_vector.end(); ++it){
+		if(it->x==x &&it->y==y){
+			result = Board_info::get_board_cells(it->board);
+			break;	
+		}
+		else{
+			result = "no match children \n";
+		}
+	}
+	free_boards(new_board_vector);
+	return result;
 }

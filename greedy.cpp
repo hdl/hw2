@@ -114,10 +114,10 @@ string Greedy::run_greedy(Board_info &current_board, char your_tile){
 	if(new_board_vector.size() != 0){
 		sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
 		result = Board_info::get_board_cells(new_board_vector[0].board);
-		free_boards(new_board_vector);
 	}else{
 		result = "no children on greedy.cpp:118\n";
 	}
+	free_boards(new_board_vector);
 	return result;
 }
 
