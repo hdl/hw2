@@ -10,16 +10,16 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 
 	if (depth == 0){
 		current_board.visited = 1;
-		ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
+		log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
 	}else{
 		if(current_board.visited==0){
 			current_board.visited = 1;
-			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
-			ss << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
+			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
+			log << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
 		}
 		
 		//else{
-		//	ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
+		//	log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
 		//}
 	}
 
@@ -27,7 +27,7 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 		return current_board;
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
-	// it's possible get 0 child
+	// it's pologible get 0 child
 	sort(children.begin(), children.end(), compare_order);
 
 	if(tile == your_tile){
@@ -35,14 +35,14 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_min_max(*child, depth -1, other_tile);
 			best_child = choose_max_child(best_child, temp_child);
-			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
+			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
 		}		
 	}else{
 		best_child.weight = INFI;
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_min_max(*child, depth -1, your_tile);	
 			best_child = choose_min_child(best_child, temp_child);
-			ss << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
+			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
 		}
 	}
 	free_boards(children);
