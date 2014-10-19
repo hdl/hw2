@@ -106,3 +106,18 @@ vector<Board_info> Greedy::get_new_boards_vector(char task_your_player, Board_in
 	return new_board_vector;
 }
 
+string Greedy::run_greedy(Board_info &current_board, char your_tile){
+	vector<Board_info> new_board_vector;
+	vector<Board_info>::iterator it;
+	string result="";
+	new_board_vector = get_new_boards_vector(your_tile, current_board, your_tile);
+	if(new_board_vector.size() != 0){
+		sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
+		result = Board_info::get_board_cells(new_board_vector[0].board);
+		free_boards(new_board_vector);
+	}else{
+		result = "no children on greedy.cpp:118\n";
+	}
+	return result;
+}
+

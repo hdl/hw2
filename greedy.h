@@ -14,5 +14,6 @@ class Greedy
 		void init(Task &task_info);
 		void get_new_boards(char task_your_player, Board_info &current_board, char tile, coord &move, vector<Board_info> &new_board_vector);
 		vector<Board_info> get_new_boards_vector(char task_your_player, Board_info &current_board, char tile);
+		string run_greedy(Board_info &current_board, char your_tile);
 };
 #endif

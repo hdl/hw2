@@ -23,20 +23,13 @@ string alphabeta_prompt="Node,Depth,Value,Alpha,Beta\n";
 int main()
 {
 	Task task_info("input.txt");
+	ofstream output_file("output.txt",ofstream::out);
 	task_info.PrintTaskInfo();
 	Board_info next_state;
-	vector<Board_info> new_board_vector;
-	vector<Board_info>::iterator it;
 	if (task_info.task_no == 1){
 		Greedy greedy;
 		greedy.init(task_info);
-		new_board_vector = greedy.get_new_boards_vector(task_info.your_player,greedy.root_board, task_info.your_player);
-		if(new_board_vector.size() != 0){
-			sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
-			cout<<Board_info::get_board_cells(new_board_vector[0].board);
-			free_boards(new_board_vector);
-		}else
-			cout<<"pass"<<endl;
+		output_file<<greedy.run_greedy(greedy.root_board, task_info.your_player);
 	}else if(task_info.task_no==2){
 		Minmax minmax;
 		minmax.init(task_info);
