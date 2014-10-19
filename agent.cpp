@@ -17,7 +17,8 @@ int weights[GAMESIZE][GAMESIZE]={
 };
 
 coord move_dirc[8] = {{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}, {-1,1}};
-
+string minmax_prompt="Node,Depth,Value\n";
+string alphabeta_prompt="Node,Depth,Value,Alpha,Beta\n";
 
 int main()
 {
@@ -42,17 +43,15 @@ int main()
 	    next_state=minmax.run_min_max(minmax.root_board, minmax.depth, minmax.your_tile);
 		// cout<<minmax.xy2(next_state.best_child_x, next_state.best_child_y)<< " weight:"<< next_state.weight<<endl;
 		cout<<minmax.get_next_state(task_info, next_state.best_child_x, next_state.best_child_y);
+		cout<<minmax_prompt;
 		cout<<minmax.log.str();
-		// minmax.root_board.print();
 	}else if(task_info.task_no==3){
 		Alphabeta alphabeta;
 		alphabeta.init(task_info);
 	    next_state=alphabeta.run_alphabeta(alphabeta.root_board, alphabeta.depth, -INFI, INFI,alphabeta.your_tile);
-		cout<<alphabeta.xy2(next_state.best_child_x, next_state.best_child_y)<< " weight:"<< next_state.weight<<endl;
-		cout<<alphabeta.log.str();
 		cout<<alphabeta.get_next_state(task_info, next_state.best_child_x, next_state.best_child_y);
-		// minmax.root_board.print();
-		// free_board_mem(minmax.root_board.board);
+		cout<<alphabeta_prompt;
+		cout<<alphabeta.log.str();
 	}
 	// while(1);
 	return (0); 
