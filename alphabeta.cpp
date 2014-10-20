@@ -9,7 +9,8 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	vector<Board_info>::iterator child;
 	int break_flag=0;
 
-	if (depth == 0){
+	children = get_new_boards_vector(your_tile, current_board, tile);
+	if (depth == 0 || children.size()==0){
 		current_board.visited = 1;
 		if(tile == your_tile){
 			current_board.a=a;
@@ -21,6 +22,7 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		}
 		(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<",";
 		(DEBUG?cout:log) << ab2(a, b)<<endl;
+		return current_board;
 	}else{
 		if(current_board.visited==0){
 			current_board.visited = 1;
@@ -30,12 +32,6 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		}
 	}
 
-	if(depth == 0){
-		return current_board;
-	}
-
-	children = get_new_boards_vector(your_tile, current_board, tile);
-	// it's pocoutible get 0 child
 	if(children.size() == 0){
 		cout<<"no children"<<endl;
 		current_board.print();

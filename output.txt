@@ -6,7 +6,7 @@
 ********
 ********
 ********
-Node,Depth,Value
-root,0,-Infinity
-c4,1,4
-root,0,4
+Node,Depth,Value,Alpha,Beta
+root,0,-Infinity,-Infinity,Infinity
+c4,1,4,-Infinity,Infinity
+root,0,4,4,Infinity
