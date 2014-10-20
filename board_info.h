@@ -16,6 +16,7 @@ class Board_info
 		int a;
 		int b;
 		Board_info();
+		Board_info clone();
 		void cal_weight(char your_tile);
 		static string get_board_cells(char **board);
 		static int is_on_board (int x, int y);

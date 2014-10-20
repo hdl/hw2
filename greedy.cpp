@@ -28,6 +28,7 @@ void Greedy::init(Task &task_info){
 	switch_player =0;
 }
 
+
 // get all new_boards for a possible move in his every direction
 void Greedy::get_new_boards(char task_your_player, Board_info &current_board, char tile, coord &move, vector<Board_info> &new_board_vector)
 {

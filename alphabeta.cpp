@@ -35,10 +35,10 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	if (depth == this->depth && children.size()==0){
 		no_move_flag=1;
 		//fake pass node
-		fake_node = current_board;
+		children.clear();
+		fake_node = current_board.clone();
 		fake_node.x=PASS;
 		fake_node.y=PASS;
-		children.clear();
 		children.push_back(fake_node);
 	}else{
 		sort(children.begin(), children.end(), compare_order);
