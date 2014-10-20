@@ -8,23 +8,18 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	vector<Board_info> children;
 	vector<Board_info>::iterator child;
 
-	if (depth == 0){
+	children = get_new_boards_vector(your_tile, current_board, tile);
+	if (depth == 0 || children.size()==0){
 		current_board.visited = 1;
 		log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
+		return current_board;
 	}else{
 		if(current_board.visited==0){
 			current_board.visited = 1;
 			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
 			log << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
 		}
-		
-		//else{
-		//	log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
-		//}
 	}
-
-	if(depth == 0) // or node is a terminal node
-		return current_board;
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
 	// it's pologible get 0 child
