@@ -13,7 +13,7 @@
 #include "task.h"
 #include "board_info.h"
 #define GAMESIZE 8
-#define INFI 888888
+#define INFI 99888889989999
 using namespace std;
 
 typedef struct coord_t{
