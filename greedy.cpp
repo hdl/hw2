@@ -115,7 +115,8 @@ string Greedy::run_greedy(Board_info &current_board, char your_tile){
 		sort(new_board_vector.begin(), new_board_vector.end(), compare_max_min);
 		result = Board_info::get_board_cells(new_board_vector[0].board);
 	}else{
-		result = "no children on greedy.cpp:118\n";
+		//can move; do nothing, print old state
+		result = Board_info::get_board_cells(current_board.board);
 	}
 	free_boards(new_board_vector);
 	return result;
