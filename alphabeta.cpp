@@ -4,13 +4,13 @@
 #include "board_info.h"
 Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a, int b, char tile)
 {
-	Board_info for_match, best_child, temp_child;
+	Board_info for_match, best_child, temp_child, fake_node;
 	vector<Board_info> children;
 	vector<Board_info>::iterator child;
 	int break_flag=0;
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
-	if (depth == 0 || children.size()==0){
+	if (depth == 0 || (children.size()==0 && depth!=this->depth)){
 		current_board.visited = 1;
 		if(tile == your_tile){
 			current_board.a=a;
@@ -32,10 +32,14 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		}
 	}
 
-	if(children.size() == 0){
-		cout<<"no children"<<endl;
-		current_board.print();
-		exit(0);
+	if (depth == this->depth && children.size()==0){
+		no_move_flag=1;
+		//fake pass node
+		fake_node = current_board;
+		fake_node.x=PASS;
+		fake_node.y=PASS;
+		children.clear();
+		children.push_back(fake_node);
 	}else{
 		sort(children.begin(), children.end(), compare_order);
 	}

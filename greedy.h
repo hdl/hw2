@@ -8,7 +8,9 @@ class Greedy
 	public:
 		char your_tile;
 		char other_tile;
+		char no_move_flag;
 		int depth;
+		int switch_player;
 		~Greedy();
 		Board_info root_board;
 		void init(Task &task_info);

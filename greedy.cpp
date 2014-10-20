@@ -24,6 +24,8 @@ void Greedy::init(Task &task_info){
 			root_board.board[k][m] = task_info.cells[k][m];
 	root_board.cal_weight(task_info.your_player);
 	root_board.tile=your_tile;
+	no_move_flag =0;
+	switch_player =0;
 }
 
 // get all new_boards for a possible move in his every direction
