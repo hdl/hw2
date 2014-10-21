@@ -83,8 +83,6 @@ string Minmax::get_next_state(Task &task_info, int x, int y, int no_move_flag)
 	vector<Board_info> new_board_vector;
 	vector<Board_info>::iterator it;
 	string result="";
-	if(no_move_flag == 1)
-		return Board_info::get_board_cells(root_board.board);
 	new_board_vector = get_new_boards_vector(your_tile, root_board, your_tile);
 	for(it=new_board_vector.begin(); it!=new_board_vector.end(); ++it){
 		if(it->x==x &&it->y==y){

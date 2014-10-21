@@ -26,15 +26,27 @@ void Greedy::init(Task &task_info){
 	root_board.tile=your_tile;
 	no_move_flag =0;
 	switch_player =0;
+	pass2_flag.clear();
 }
 int Greedy::game_end(Board_info &current_board)
 {
 	int i,j;
+	if(pass2_flag.size()>=2){
+		if(pass2_flag.back()==1) {
+			if(pass2_flag[pass2_flag.size()-2]==1)
+				return 1;
+		}
+		else {
+			pass2_flag.clear();
+		}
+	}
+
 	for(i=0; i<GAMESIZE; i++)	
 		for(j=0; j<GAMESIZE; j++){
 			if(current_board.board[i][j]==other_tile)
 				return 0;
-		}	
+		}
+	cout << "game end\n";
 	return 1;
 }
 

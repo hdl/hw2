@@ -11,6 +11,7 @@ class Greedy
 		char no_move_flag;
 		int depth;
 		int switch_player;
+		vector<int> pass2_flag;
 		~Greedy();
 		int game_end(Board_info &current_board);
 		Board_info root_board;

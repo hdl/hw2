@@ -33,8 +33,8 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	}
 
 	if (children.size()==0){
-		no_move_flag=1;
 		//fake pass node
+		pass2_flag.push_back(1);
 		children.clear();
 		fake_node = current_board.clone();
 		fake_node.x=PASS;
@@ -42,6 +42,7 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		fake_node.visited = 0;
 		children.push_back(fake_node);
 	}else{
+		pass2_flag.push_back(0);
 		sort(children.begin(), children.end(), compare_order);
 	}
 
