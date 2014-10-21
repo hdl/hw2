@@ -4,7 +4,7 @@
 #include "minmax.h"
 #include "alphabeta.h"
 
-int DEBUG=1;
+int DEBUG=0;
 int weights[GAMESIZE][GAMESIZE]={
 	{99, -8, 8, 6, 6, 8, -8, 99},
 	{-8, -24, -4, -3, -3, -4, -24, -8},

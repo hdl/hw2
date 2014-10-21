@@ -39,6 +39,7 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		fake_node = current_board.clone();
 		fake_node.x=PASS;
 		fake_node.y=PASS;
+		fake_node.visited = 0;
 		children.push_back(fake_node);
 	}else{
 		sort(children.begin(), children.end(), compare_order);

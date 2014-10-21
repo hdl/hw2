@@ -9,3 +9,6 @@ X
 ***XXX**
 ********
 ********
+
+
+// no valid move switch to another
