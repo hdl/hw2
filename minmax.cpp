@@ -4,12 +4,12 @@
 #include "board_info.h"
 Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 {
-	Board_info best_child, temp_child;
+	Board_info best_child, temp_child, fake_node;
 	vector<Board_info> children;
 	vector<Board_info>::iterator child;
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
-	if (depth == 0 || children.size()==0){
+	if (depth == 0 || game_end(current_board)==1){
 		current_board.visited = 1;
 		log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
 		return current_board;
@@ -20,10 +20,19 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 			log << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
 		}
 	}
-
-	children = get_new_boards_vector(your_tile, current_board, tile);
-	// it's pologible get 0 child
-	sort(children.begin(), children.end(), compare_order);
+	if (children.size()==0){
+		//fake pass node
+		pass2_flag.push_back(1);
+		children.clear();
+		fake_node = current_board.clone();
+		fake_node.x=PASS;
+		fake_node.y=PASS;
+		fake_node.visited = 0;
+		children.push_back(fake_node);
+	}else{
+		pass2_flag.push_back(0);
+		sort(children.begin(), children.end(), compare_order);
+	}
 
 	if(tile == your_tile){
 		best_child.weight = -INFI;
@@ -43,7 +52,7 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	free_boards(children);
 	//weight is the only var to save/to callee 
 	current_board.weight = best_child.weight;
-	current_board.best_child_x = best_child.x;	
+	current_board.best_child_x = best_child.x;
 	current_board.best_child_y = best_child.y;
 	cout << xy2(current_board.x, current_board.y) << ","<<xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
 	return current_board;
@@ -78,7 +87,7 @@ string Minmax::xy2(int x, int y)
 	return result;	
 }
 
-string Minmax::get_next_state(Task &task_info, int x, int y, int no_move_flag)
+string Minmax::get_next_state(Task &task_info, int x, int y)
 {
 	vector<Board_info> new_board_vector;
 	vector<Board_info>::iterator it;

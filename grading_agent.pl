@@ -7,7 +7,7 @@
 # Note: Edit refdir below to point to where the reference files are.
 
 use strict;
-my $refdir = "./reference"; # directory where the reference files are
+my $refdir = shift; # directory where the reference files are
 
 # First build:
 my $student = ".";

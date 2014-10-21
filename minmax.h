@@ -11,6 +11,6 @@ class Minmax: public Greedy
 		Board_info choose_max_child(Board_info &board1, Board_info &board2);
 		Board_info run_min_max(Board_info &current_board, int depth, char tile);
 		string xy2(int x, int y);
-		string get_next_state(Task &task_info, int x, int y, int no_move_flag);
+		string get_next_state(Task &task_info, int x, int y);
 };
 #endif
