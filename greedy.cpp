@@ -58,6 +58,7 @@ void Greedy::get_new_boards(char task_your_player, Board_info &current_board, ch
 	int i=0, j=0;
 	int x=0, y=0;
 	int k=0, m=0;
+	int find_flag = 0;
 	char other_tile;
 	Board_info new_board;
 	if (current_board.board[move.x][move.y] != '*'){
@@ -68,23 +69,19 @@ void Greedy::get_new_boards(char task_your_player, Board_info &current_board, ch
 		other_tile = 'O';
 	else
 		other_tile = 'X';
+	new_board.board = new char*[GAMESIZE];
+	for(j=0; j<GAMESIZE; j++)
+		new_board.board[j] = new char[GAMESIZE];
+	for(k=0; k<8; k++)
+		for(m=0; m<8; m++)
+			new_board.board[k][m] = current_board.board[k][m];
 
 	// all the possible results of this move
 	for(i = 0; i < 8; i++){
-
-		new_board.board = new char*[GAMESIZE];
-		for(j=0; j<GAMESIZE; j++)
-			new_board.board[j] = new char[GAMESIZE];
-		for(k=0; k<8; k++)
-			for(m=0; m<8; m++)
-				new_board.board[k][m] = current_board.board[k][m];
-		new_board.board[move.x][move.y] = tile;
-
 		x = move.x + move_dirc[i].x;
 		y = move.y + move_dirc[i].y;
 		// make sure neighbour on this direction is not your tile
 		if (!Board_info::is_on_board(x, y) || new_board.board[x][y]!=other_tile){
-			free_board_mem(new_board.board);
 			continue;		
 		}
 		// go foward from this direction
@@ -94,10 +91,10 @@ void Greedy::get_new_boards(char task_your_player, Board_info &current_board, ch
 			y += move_dirc[i].y;
 		}
 		if (!Board_info::is_on_board(x, y) || new_board.board[x][y] == '*' ){
-			free_board_mem(new_board.board);
-			continue;		
+			continue;// this direction is not valid	
 		}
 		if (new_board.board[x][y] == tile){
+			find_flag=1;
 			while(1){
 				x-= move_dirc[i].x;	
 				y-= move_dirc[i].y;
@@ -106,13 +103,19 @@ void Greedy::get_new_boards(char task_your_player, Board_info &current_board, ch
 				else
 					new_board.board[x][y] = tile;
 			}
-			new_board.x=move.x;
-			new_board.y=move.y;
-			new_board.tile=tile;
-			new_board.cal_weight(task_your_player);
-			//new_board.print();
-			new_board_vector.push_back(new_board);
 		}
+	}
+	if(find_flag==1){
+		new_board.board[move.x][move.y] = tile;
+		new_board.x=move.x;
+		new_board.y=move.y;
+		new_board.tile=tile;
+		new_board.cal_weight(task_your_player);
+		new_board_vector.push_back(new_board);
+		return;
+	}else{
+		free_board_mem(new_board.board);	
+		return;
 	}
 }
 
@@ -129,6 +132,11 @@ vector<Board_info> Greedy::get_new_boards_vector(char task_your_player, Board_in
 			get_new_boards(task_your_player, current_board, tile, move, new_board_vector);
 		}
 	}
+	cout<<"children:";	
+	for(vector<Board_info>::iterator child=new_board_vector.begin(); child != new_board_vector.end(); ++child){
+		cout<<child->x<<child->y<<",";
+	}
+	cout<<endl;
 	return new_board_vector;
 }
 

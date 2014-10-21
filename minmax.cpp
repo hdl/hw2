@@ -9,15 +9,20 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	vector<Board_info>::iterator child;
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
+	cout<<"children::";
+	for(child=children.begin(); child != children.end(); ++child){
+		cout<<xy2(child->x, child->y)<<",";
+	}
+	cout<<endl;
 	if (depth == 0 || game_end(current_board)==1){
 		current_board.visited = 1;
-		log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
+		(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
 		return current_board;
 	}else{
 		if(current_board.visited==0){
 			current_board.visited = 1;
-			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
-			log << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
+			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
+			(DEBUG?cout:log) << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
 		}
 	}
 	if (children.size()==0){
@@ -29,6 +34,7 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 		fake_node.y=PASS;
 		fake_node.visited = 0;
 		children.push_back(fake_node);
+		cout <<"fake..."<<xy2(fake_node.x, fake_node.y);
 	}else{
 		pass2_flag.push_back(0);
 		sort(children.begin(), children.end(), compare_order);
@@ -39,14 +45,14 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_min_max(*child, depth -1, other_tile);
 			best_child = choose_max_child(best_child, temp_child);
-			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
+			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
 		}		
 	}else{
 		best_child.weight = INFI;
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_min_max(*child, depth -1, your_tile);	
 			best_child = choose_min_child(best_child, temp_child);
-			log << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
+			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< best_child.weight<<endl;
 		}
 	}
 	free_boards(children);
@@ -54,7 +60,7 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	current_board.weight = best_child.weight;
 	current_board.best_child_x = best_child.x;
 	current_board.best_child_y = best_child.y;
-	cout << xy2(current_board.x, current_board.y) << ","<<xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
+	cout << xy2(current_board.x, current_board.y) << "::::"<<xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
 	return current_board;
 }
 
@@ -84,7 +90,7 @@ string Minmax::xy2(int x, int y)
 		return "pass";
 	result.append(1, 'a'+y);
 	result.append(1, '1'+x);
-	return result;	
+	return result;
 }
 
 string Minmax::get_next_state(Task &task_info, int x, int y)
