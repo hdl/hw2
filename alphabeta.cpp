@@ -10,7 +10,7 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	int break_flag=0;
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
-	if (depth == 0 || (children.size()==0 && depth!=this->depth)){
+	if (depth == 0 || game_end(current_board)){
 		current_board.visited = 1;
 		if(tile == your_tile){
 			current_board.a=a;
@@ -32,7 +32,7 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		}
 	}
 
-	if (depth == this->depth && children.size()==0){
+	if (children.size()==0){
 		no_move_flag=1;
 		//fake pass node
 		children.clear();

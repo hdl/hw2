@@ -27,7 +27,16 @@ void Greedy::init(Task &task_info){
 	no_move_flag =0;
 	switch_player =0;
 }
-
+int Greedy::game_end(Board_info &current_board)
+{
+	int i,j;
+	for(i=0; i<GAMESIZE; i++)	
+		for(j=0; j<GAMESIZE; j++){
+			if(current_board.board[i][j]==other_tile)
+				return 0;
+		}	
+	return 1;
+}
 
 // get all new_boards for a possible move in his every direction
 void Greedy::get_new_boards(char task_your_player, Board_info &current_board, char tile, coord &move, vector<Board_info> &new_board_vector)

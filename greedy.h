@@ -12,6 +12,7 @@ class Greedy
 		int depth;
 		int switch_player;
 		~Greedy();
+		int game_end(Board_info &current_board);
 		Board_info root_board;
 		void init(Task &task_info);
 		void get_new_boards(char task_your_player, Board_info &current_board, char tile, coord &move, vector<Board_info> &new_board_vector);
