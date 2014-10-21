@@ -11,7 +11,7 @@ Board_info::Board_info()
 	y=-1;
 	tile = '$'; // need change
 	board = NULL; //need change
-	//weight = 1;
+	weight = INFI;
 	visited = 0;
 	best_child_x = -1;
 	best_child_y = -1;

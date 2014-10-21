@@ -33,8 +33,10 @@ int Greedy::game_end(Board_info &current_board)
 	int i,j;
 	if(pass2_flag.size()>=2){
 		if(pass2_flag.back()==1) {
-			if(pass2_flag[pass2_flag.size()-2]==1)
+			if(pass2_flag[pass2_flag.size()-2]==1){
+				cout<<"pass2_flag=2\n";
 				return 1;
+			}
 		}
 		else {
 			pass2_flag.clear();
