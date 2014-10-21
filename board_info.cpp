@@ -17,6 +17,7 @@ Board_info::Board_info()
 	best_child_y = -1;
 	a = -INFI;
 	b = INFI;
+	for_match = 0;
 }
 Board_info Board_info::clone()
 {

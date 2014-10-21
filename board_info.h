@@ -15,6 +15,7 @@ class Board_info
 		int best_child_y;
 		int a;
 		int b;
+		int for_match;
 		Board_info();
 		Board_info clone();
 		void cal_weight(char your_tile);
