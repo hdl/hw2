@@ -72,6 +72,9 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		if(best_weight_child.weight < best_child.a){
 			cout<<"-----------se for match bit\n";
 			current_board.for_match=1;
+		}if(best_weight_child.weight == best_child.a){
+			// some strong contion to make sure
+			cout<<"what??";	
 		}
 	}else{
 		best_weight_child.weight = INFI;
@@ -97,6 +100,8 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		if(best_weight_child.weight > best_child.b){
 			cout<<"-----------set for match bit\n";
 			current_board.for_match=1;
+		}if(best_weight_child.weight == best_child.b){
+			cout<<"what?";	
 		}
 	}
 	free_boards(children);
