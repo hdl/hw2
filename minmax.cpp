@@ -89,12 +89,10 @@ string Minmax::get_next_state(Task &task_info, int x, int y, int no_move_flag)
 	for(it=new_board_vector.begin(); it!=new_board_vector.end(); ++it){
 		if(it->x==x &&it->y==y){
 			result = Board_info::get_board_cells(it->board);
-			break;	
-		}
-		else{
-			result = "no match children \n";
+			free_boards(new_board_vector);
+			return result;
 		}
 	}
 	free_boards(new_board_vector);
-	return result;
+	return Board_info::get_board_cells(root_board.board);
 }
