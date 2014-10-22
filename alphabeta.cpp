@@ -157,7 +157,6 @@ Board_info Alphabeta::run_min_max(Board_info &current_board, int depth, char til
 	vector<Board_info> children;
 	vector<Board_info>::iterator child;
 
-	children = get_new_boards_vector(your_tile, current_board, tile);
 	if (depth == 0 || game_end(current_board)==1){
 		current_board.visited = 1;
 		return current_board;
@@ -166,6 +165,7 @@ Board_info Alphabeta::run_min_max(Board_info &current_board, int depth, char til
 			current_board.visited = 1;
 		}
 	}
+	children = get_new_boards_vector(your_tile, current_board, tile);
 	if (children.size()==0){
 		//fake pass node
 		pass2_flag.push_back(1);
@@ -174,6 +174,10 @@ Board_info Alphabeta::run_min_max(Board_info &current_board, int depth, char til
 		fake_node.x=PASS;
 		fake_node.y=PASS;
 		fake_node.visited = 0;
+		if(current_board.tile == your_tile)
+			fake_node.tile = other_tile;
+	    else
+			fake_node.tile = your_tile;	
 		children.push_back(fake_node);
 	}else{
 		pass2_flag.push_back(0);

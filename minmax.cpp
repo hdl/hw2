@@ -8,7 +8,6 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	vector<Board_info> children;
 	vector<Board_info>::iterator child;
 
-	children = get_new_boards_vector(your_tile, current_board, tile);
 	cout<<"children::";
 	for(child=children.begin(); child != children.end(); ++child){
 		cout<<xy2(child->x, child->y)<<",";
@@ -25,6 +24,7 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 			(DEBUG?cout:log) << (tile == your_tile ?"-":"")<<"Infinity"<<endl;
 		}
 	}
+	children = get_new_boards_vector(your_tile, current_board, tile);
 	if (children.size()==0){
 		//fake pass node
 		pass2_flag.push_back(1);
@@ -33,6 +33,10 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 		fake_node.x=PASS;
 		fake_node.y=PASS;
 		fake_node.visited = 0;
+		if(current_board.tile == your_tile)
+			fake_node.tile = other_tile;
+	    else
+			fake_node.tile = your_tile;	
 		children.push_back(fake_node);
 		cout <<"fake..."<<xy2(fake_node.x, fake_node.y);
 	}else{
