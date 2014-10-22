@@ -7,13 +7,7 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	Board_info for_match, v, temp_child, fake_node;
 	vector<Board_info> children;
 	vector<Board_info>::iterator child;
-	Board_info best_weight_child;
-	children = get_new_boards_vector(your_tile, current_board, tile);
-	cout<<xy2(current_board.x, current_board.y)<<"'s children:";
-	for(child=children.begin(); child != children.end(); ++child){
-		cout<<xy2(child->x,child->y)<<",";
-	}
-	cout<<endl;
+
 	if (depth == 0 || game_end(current_board)){
 		current_board.v=current_board.weight;
 		(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.v<<",";
@@ -28,6 +22,13 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		}
 	}
 
+	children = get_new_boards_vector(your_tile, current_board, tile);
+	cout<<xy2(current_board.x, current_board.y)<<"'s children:";
+	for(child=children.begin(); child != children.end(); ++child){
+		cout<<xy2(child->x,child->y)<<",";
+	}
+	cout<<endl;
+
 	if (children.size()==0){
 		//fake pass node
 		pass2_flag.push_back(1);
@@ -36,25 +37,19 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		fake_node.x=PASS;
 		fake_node.y=PASS;
 		fake_node.visited = 0;
+		if(current_board.tile == your_tile)
+			fake_node.tile = other_tile;
+	    else
+			fake_node.tile = your_tile;	
 		children.push_back(fake_node);
 	}else{
 		pass2_flag.push_back(0);
 		sort(children.begin(), children.end(), compare_order);
 	}
-	// if(current_board.x==PASS && current_board.y==PASS){
-	// 	if(tile == your_tile)
-	// 		tile = other_tile;
-	// 	else
-	// 		tile = your_tile;
-	// }
-
 	if(tile == your_tile){
 		v.v= -INFI;
 		for(child=children.begin(); child != children.end(); ++child){
-			if(current_board.x==PASS && current_board.y==PASS)
-				temp_child = run_alphabeta(*child, depth -1, a, b, your_tile);
-			else //normally
-				temp_child = run_alphabeta(*child, depth -1, a, b, other_tile);
+			temp_child = run_alphabeta(*child, depth -1, a, b, other_tile);
 			v = max_v(v, temp_child);
 			if(v.v>=b){
 			    (DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
@@ -72,10 +67,7 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	}else{
 		v.v= INFI;
 		for(child=children.begin(); child != children.end(); ++child){
-			if(current_board.x==PASS && current_board.y==PASS)
 				temp_child = run_alphabeta(*child, depth -1, a, b, your_tile);
-			else
-				temp_child = run_alphabeta(*child, depth -1, a, b, other_tile);
 			v = min_v(v, temp_child);
 			if(v.v<=a){
 				(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
