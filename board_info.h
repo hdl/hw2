@@ -13,8 +13,7 @@ class Board_info
 		int visited;
 		int best_child_x;
 		int best_child_y;
-		int a;
-		int b;
+		int v;
 		int for_match;
 		Board_info();
 		Board_info clone();

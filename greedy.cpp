@@ -132,11 +132,11 @@ vector<Board_info> Greedy::get_new_boards_vector(char task_your_player, Board_in
 			get_new_boards(task_your_player, current_board, tile, move, new_board_vector);
 		}
 	}
-	cout<<"children:";	
-	for(vector<Board_info>::iterator child=new_board_vector.begin(); child != new_board_vector.end(); ++child){
-		cout<<child->x<<child->y<<",";
-	}
-	cout<<endl;
+	// cout<<"children:";	
+	// for(vector<Board_info>::iterator child=new_board_vector.begin(); child != new_board_vector.end(); ++child){
+	// 	cout<<child->x<<child->y<<",";
+	// }
+	// cout<<endl;
 	return new_board_vector;
 }
 

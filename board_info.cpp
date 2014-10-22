@@ -15,9 +15,8 @@ Board_info::Board_info()
 	visited = 0;
 	best_child_x = -1;
 	best_child_y = -1;
-	a = -INFI;
-	b = INFI;
 	for_match = 0;
+	v=45678;
 }
 Board_info Board_info::clone()
 {
@@ -29,9 +28,8 @@ Board_info Board_info::clone()
 	new_board.weight = this->weight;
 	new_board.visited = this->visited;
 	new_board.best_child_x= this->best_child_y;
-	new_board.a = this->a;
-	new_board.b = this->b;
 	new_board.board = new char*[GAMESIZE];
+	new_board.v = this->v;
 	for(j=0; j<GAMESIZE; j++)
 		new_board.board[j] = new char[GAMESIZE];
 	for(k=0; k<8; k++)
