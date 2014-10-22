@@ -134,19 +134,24 @@ int Alphabeta::compare_min_v(const Board_info &board1, const Board_info &board2)
 string Alphabeta::ab2(int a, int b)
 {
 	string result="";
+	stringstream ssa, ssb;
 	if(a==-INFI)
 		result="-Infinity,";
 	else if(a==INFI)
 		result="Infinity,";
-	else
-		result=to_string(a)+",";
+	else{
+		ssa<<a;
+		result=ssa.str()+",";
+	}
 
 	if(b==-INFI)
 		result+="-Infinity";
 	else if(b==INFI)
 		result+="Infinity";
-	else
-		result+=to_string(b);
+	else{
+		ssb<<b;
+		result+=ssb.str();
+	}
 
 	return result;
 }
