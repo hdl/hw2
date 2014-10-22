@@ -34,7 +34,7 @@ int Greedy::game_end(Board_info &current_board)
 	if(pass2_flag.size()>=2){
 		if(pass2_flag.back()==1) {
 			if(pass2_flag[pass2_flag.size()-2]==1){
-				cout<<"pass2_flag=2\n";
+				// cout<<"pass2_flag=2\n";
 				return 1;
 			}
 		}
@@ -48,7 +48,7 @@ int Greedy::game_end(Board_info &current_board)
 			if(current_board.board[i][j]==other_tile)
 				return 0;
 		}
-	cout << "game end\n";
+	// cout << "game end\n";
 	return 1;
 }
 

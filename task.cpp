@@ -27,13 +27,13 @@ Task::Task(const string &inputFileName)
 void Task::PrintTaskInfo()
 {
 	int i, j;
-	cout << task_no << endl;
-	cout << your_player << endl;
-	cout << cut_off_depth << endl;
+	// cout << task_no << endl;
+	// cout << your_player << endl;
+	// cout << cut_off_depth << endl;
 	for(i = 0; i < GAMESIZE; i++){
 		for(j = 0; j < GAMESIZE; j++){
-			cout << cells[i][j];
+			// cout << cells[i][j];
 		}
-		cout << endl;
+		// cout << endl;
 	}
 }

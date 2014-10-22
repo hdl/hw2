@@ -24,7 +24,7 @@ int main()
 {
 	Task task_info("input.txt");
 	ofstream output_file("output.txt",ofstream::out);
-	task_info.PrintTaskInfo();
+	// task_info.PrintTaskInfo();
 	Board_info next_state;
 	if (task_info.task_no == 1){
 		Greedy greedy;
@@ -101,5 +101,5 @@ void free_boards(vector<Board_info> &new_board_vector)
 		free_board_mem(it->board);
 		count++;
 	}
-	cout << count << "boards are freed"<<endl;
+	// cout << count << "boards are freed"<<endl;
 }

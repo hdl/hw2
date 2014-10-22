@@ -8,11 +8,11 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	vector<Board_info> children;
 	vector<Board_info>::iterator child;
 
-	cout<<"children::";
-	for(child=children.begin(); child != children.end(); ++child){
-		cout<<xy2(child->x, child->y)<<",";
-	}
-	cout<<endl;
+	// cout<<"children::";
+	//for(child=children.begin(); child != children.end(); ++child){
+		// cout<<xy2(child->x, child->y)<<",";
+	//}
+	//cout<<endl;
 	if (depth == 0 || game_end(current_board)==1){
 		current_board.visited = 1;
 		(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<","<< current_board.weight<<endl;
@@ -38,7 +38,7 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	    else
 			fake_node.tile = your_tile;	
 		children.push_back(fake_node);
-		cout <<"fake..."<<xy2(fake_node.x, fake_node.y);
+		// cout <<"fake..."<<xy2(fake_node.x, fake_node.y);
 	}else{
 		pass2_flag.push_back(0);
 		sort(children.begin(), children.end(), compare_order);
@@ -64,7 +64,7 @@ Board_info Minmax::run_min_max(Board_info &current_board, int depth, char tile)
 	current_board.weight = best_child.weight;
 	current_board.best_child_x = best_child.x;
 	current_board.best_child_y = best_child.y;
-	cout << xy2(current_board.x, current_board.y) << "::::"<<xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
+	// cout << xy2(current_board.x, current_board.y) << "::::"<<xy2(current_board.best_child_x, current_board.best_child_y)<<endl;	
 	return current_board;
 }
 
@@ -103,9 +103,9 @@ string Minmax::get_next_state(Task &task_info, int x, int y)
 	vector<Board_info>::iterator it;
 	string result="";
 	new_board_vector = get_new_boards_vector(your_tile, root_board, your_tile);
-	cout<<"children:";	
+	// cout<<"children:";	
 	for(vector<Board_info>::iterator child=new_board_vector.begin(); child != new_board_vector.end(); ++child){
-		cout<<child->x<<child->y<<",";
+		// cout<<child->x<<child->y<<",";
 	}
 	for(it=new_board_vector.begin(); it!=new_board_vector.end(); ++it){
 		if(it->x==x &&it->y==y){

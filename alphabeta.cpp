@@ -23,11 +23,11 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 	}
 
 	children = get_new_boards_vector(your_tile, current_board, tile);
-	cout<<xy2(current_board.x, current_board.y)<<"'s children:";
-	for(child=children.begin(); child != children.end(); ++child){
-		cout<<xy2(child->x,child->y)<<",";
-	}
-	cout<<endl;
+	// cout<<xy2(current_board.x, current_board.y)<<"'s children:";
+	//for(child=children.begin(); child != children.end(); ++child){
+		// cout<<xy2(child->x,child->y)<<",";
+	//}
+	//cout<<endl;
 
 	if (children.size()==0){
 		//fake pass node
@@ -92,7 +92,7 @@ END:
 Board_info Alphabeta::max_v(Board_info &board1, Board_info &board2)
 {
 	if(compare_max_v(board1, board2)==1){
-		cout<<"give up:"<<xy2(board2.x, board2.y)<<"keep best_child:"<<xy2(board1.x, board1.y)<<endl;
+		// cout<<"give up:"<<xy2(board2.x, board2.y)<<"keep best_child:"<<xy2(board1.x, board1.y)<<endl;
 		return board1;
 	}
 	else
@@ -102,7 +102,7 @@ Board_info Alphabeta::max_v(Board_info &board1, Board_info &board2)
 Board_info Alphabeta::min_v(Board_info &board1, Board_info &board2)
 {
 	if(compare_min_v(board1, board2)==1){
-		cout<<"give up:"<<xy2(board2.x, board2.y)<<"keep best_child:"<<xy2(board1.x, board1.y)<<endl;
+		// cout<<"give up:"<<xy2(board2.x, board2.y)<<"keep best_child:"<<xy2(board1.x, board1.y)<<endl;
 
 		return board1;
 	}
