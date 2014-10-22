@@ -42,6 +42,12 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_alphabeta(*child, depth -1, a, b, other_tile);
 			v = max_v(v, temp_child);
+			if(v.v>=b){
+			    (DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
+			    (DEBUG?cout:log) << v.v<<",";
+			    (DEBUG?cout:log) <<ab2(a,b)<<endl;
+				goto END;
+			}
 			a = max(a, v.v);
 
 			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
@@ -54,6 +60,12 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		for(child=children.begin(); child != children.end(); ++child){
 			temp_child = run_alphabeta(*child, depth -1, a, b, other_tile);
 			v = min_v(v, temp_child);
+			if(v.v<=a){
+				(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
+				(DEBUG?cout:log) << v.v<<",";
+				(DEBUG?cout:log) << ab2(a,b) <<endl;
+				goto END;
+			}
 			b = min(b, v.v);
 
 			(DEBUG?cout:log) << xy2(current_board.x, current_board.y)<<","<<this->depth - depth<<",";
@@ -63,8 +75,8 @@ Board_info Alphabeta::run_alphabeta(Board_info &current_board, int depth, int a,
 		}
 	}
 
+END:
 	free_boards(children);
-	// v.print();
 	return v;
 }
 
