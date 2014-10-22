@@ -99,6 +99,10 @@ string Minmax::get_next_state(Task &task_info, int x, int y)
 	vector<Board_info>::iterator it;
 	string result="";
 	new_board_vector = get_new_boards_vector(your_tile, root_board, your_tile);
+	cout<<"children:";	
+	for(vector<Board_info>::iterator child=new_board_vector.begin(); child != new_board_vector.end(); ++child){
+		cout<<child->x<<child->y<<",";
+	}
 	for(it=new_board_vector.begin(); it!=new_board_vector.end(); ++it){
 		if(it->x==x &&it->y==y){
 			result = Board_info::get_board_cells(it->board);

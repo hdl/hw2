@@ -71,13 +71,11 @@ string Board_info::get_board_cells(char **board){
 
 void Board_info::print(void)
 {
-	cout<<"---------------------------begin"<<endl;
-	cout<<"tile:"<<tile;
+	cout<<"print:::::tile:"<<tile;
 	cout<<" "<<x<<","<<y;
 	cout<<" weight:"<<weight;
 	cout<<" visited:"<<visited;
-	cout<<" "<<best_child_x<<","<<best_child_y<<endl;
+	cout<<"best child_x, child_y:"<<best_child_x<<best_child_y<<endl;
 	//cout<<get_board_cells(board);
-	cout<<"---------------------------end"<<endl;
 }
 
